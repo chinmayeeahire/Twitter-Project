@@ -1,13 +1,28 @@
-const express=require('express');
-const connect=require('./config/database');
+// const express=require('express');
+import express from 'express';
+import bodyParser from 'body-parser';
+
+import apiRoutes from './routes/index.js';
+
+
+// const connect=require('./config/database');
+import {connect} from './config/database.js';
+//import TweetService from './services/tweet-service.js';
 // const {TweetRepository}=require('./repository/index');
 // const TweetService=require('./services/tweet-service');
 // const Tweet=require('./models/tweet');
 // const TweetRepository=require('./repository/tweet-repository');
 // const Comment=require('./models/comment');
 
-const app=express();
+// import HashtagRepository from './repository/hashtag-repository.js';
 
+import Service from './services/tweet-service.js';
+
+const app=express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.use('/api', apiRoutes);
 
 app.listen(3000, async ()=>{
 console.log("Server started");
@@ -56,5 +71,10 @@ console.log("Mongo DB connected");
 //     content: 'My #working twitter!!'
 // });
 // console.log(tweet);
+
+// let service=new Service();
+// await service.create({
+//   content: "my other code #WORKS or not?"
+// });
 });
 
